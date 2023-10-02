@@ -4,7 +4,6 @@ import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import { fetchRedis } from "@/helpers/redis";
 
-import { User } from "@/types/db";
 
 import FriendRequests from "@/components/Dashboard/Requests/FriendRequest";
 
