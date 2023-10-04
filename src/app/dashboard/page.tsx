@@ -33,6 +33,7 @@ const Dashboard = async () => {
           lastMessage: {
             id: "",
             senderId: "",
+            receiverId: "",
             text: "",
             timestamp: 0,
           },
