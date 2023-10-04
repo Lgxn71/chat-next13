@@ -22,11 +22,17 @@ interface ExtendedMessage extends Message {
 const SideBarChatList: FC<SideBarChatListProps> = ({ friends, sessionId }) => {
   const router = useRouter();
   const pathname = usePathname();
+
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]); // for badge counter of unseenMessages
+  const [activeChats, setActiveChast] = useState<User[]>(friends);
 
   useEffect(() => {
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:chats`));
     pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`));
+
+    const newFriendHandler = (newFriend: User) => {
+      setActiveChast((prev) => [...prev, newFriend]);
+    };
 
     const newMessageHandler = (message: ExtendedMessage) => {
       const shouldNotify =
@@ -48,8 +54,6 @@ const SideBarChatList: FC<SideBarChatListProps> = ({ friends, sessionId }) => {
       ));
       setUnseenMessages((prev) => [...prev, message]);
     };
-
-    const newFriendHandler = () => router.refresh();
 
     pusherClient.bind("new_message", newMessageHandler);
     pusherClient.bind("new_friend", newFriendHandler);
@@ -73,7 +77,7 @@ const SideBarChatList: FC<SideBarChatListProps> = ({ friends, sessionId }) => {
 
   return (
     <ul role="list" className="max-h-[25rem] overflow-y-auto -mx-2 space-y-1">
-      {friends.sort().map((friend) => {
+      {activeChats.sort().map((friend) => {
         const unseenMessagesCount = unseenMessages.filter(
           (unseenMessage) => unseenMessage.senderId === friend.id
         ).length;

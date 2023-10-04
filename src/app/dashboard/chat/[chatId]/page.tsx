@@ -49,7 +49,13 @@ const ChatPage = async ({ params }: ChatProps) => {
   if (user.id !== userId1 && user.id !== userId2) notFound();
 
   const chatPartnerID = user.id === userId1 ? userId2 : userId1; // it will be u or itl will no be u
-  const chatPartner = (await Database.get(`user:${chatPartnerID}`)) as User;
+
+  const chatPartnerJSON = (await fetchRedis(
+    "get",
+    `user:${chatPartnerID}`
+  )) as string;
+  const chatPartner = JSON.parse(chatPartnerJSON) as User;
+
   const initialMessages = (await getChatMessages(chatId)) as Message[];
 
   return (
