@@ -5,9 +5,6 @@ import { Database } from "@/lib/db";
 
 import { z } from "zod";
 
-import { pusherServer } from "@/lib/pusher";
-import { toPusherKey } from "@/lib/utils";
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -21,15 +18,6 @@ export async function POST(req: Request) {
       `user:${session.user.id}:incoming_friend_requests`,
       idToDeny
     );
-
-    // pusherServer.trigger(
-    //   toPusherKey(`user:${idToDeny}:incoming_friend_requests`),
-    //   "incoming_friend_requests",
-    //   {
-    //     senderId: session.user.id,
-    //     senderEmail: session.user.email,
-    //   }
-    // );
 
     return new Response("ok");
   } catch (error) {

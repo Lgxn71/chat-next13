@@ -8,7 +8,6 @@ import axios from "axios";
 import { pusherClient } from "@/lib/pusher";
 import { toPusherKey } from "@/lib/utils";
 
-import { Check, X } from "lucide-react";
 import { Icons } from "@/components/UI/Icons/Icons";
 
 interface FriendRequestsProps {
@@ -45,7 +44,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({
       );
       pusherClient.unbind("incoming_friend_requests", friendRequestHandler);
     };
-  }, []);
+  }, [sessionId]);
 
   const answerOnFriendRequest: MouseEventHandler<HTMLButtonElement> = async (
     event
@@ -79,7 +78,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({
               aria-label="accept friend"
               className="w-8 h-8 bg-indigo-600 hover:bg-indigo-700 grid place-items-center rounded-full transition hover:shadow-md"
             >
-              <Check className="font-semibold text-white w-3/4 h-3/4" />
+              <Icons.Check className="font-semibold text-white w-3/4 h-3/4" />
             </button>
 
             <button
@@ -90,7 +89,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({
               aria-label="deny friend"
               className="w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md"
             >
-              <X className="font-semibold text-white w-3/4 h-3/4" />
+              <Icons.X className="font-semibold text-white w-3/4 h-3/4" />
             </button>
           </div>
         ))

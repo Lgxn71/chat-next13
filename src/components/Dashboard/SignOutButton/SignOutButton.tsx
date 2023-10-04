@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 import Button from "../../UI/Buttons/Buttons";
 
-import { Loader2, LogOut } from "lucide-react";
+import { Icons } from "@/components/UI/Icons/Icons";
 
 interface SignOutButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
@@ -29,9 +29,9 @@ const SignOutButton: FC<SignOutButtonProps> = ({ ...props }) => {
   return (
     <Button {...props} variant="ghost" onClick={signOutHandler}>
       {isSigningOut ? (
-        <Loader2 className="animate-spin h-4 w-4" />
+        <Icons.Loader2 className="animate-spin h-4 w-4" />
       ) : (
-        <LogOut className="w-4 h4" />
+        <Icons.LogOut className="w-4 h4" />
       )}
     </Button>
   );

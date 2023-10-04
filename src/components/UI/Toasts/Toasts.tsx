@@ -1,8 +1,10 @@
 import { FC } from "react";
+
+import Image from "next/image";
+
 import toast, { Toast } from "react-hot-toast";
 
 import { chatHrefConstructor, cn } from "@/lib/utils";
-import Image from "next/image";
 
 interface IUnseenChatToastsProps {
   t: Toast;

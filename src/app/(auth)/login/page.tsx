@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { useState, FC } from "react";
 
 import { signIn } from "next-auth/react";
 
@@ -8,9 +8,7 @@ import { toast } from "react-hot-toast";
 
 import Button from "@/components/UI/Buttons/Buttons";
 
-interface PageProps {}
-
-const LoginPage: FC<PageProps> = () => {
+const LoginPage: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loginWithGoogle = async () => {

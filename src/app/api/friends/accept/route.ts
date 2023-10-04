@@ -4,6 +4,9 @@ import { authOptions } from "@/lib/auth";
 import { fetchRedis } from "@/helpers/redis";
 import { Database } from "@/lib/db";
 
+import { pusherServer } from "@/lib/pusher";
+import { toPusherKey } from "@/lib/utils";
+
 import { z } from "zod";
 
 export async function POST(req: Request) {
@@ -39,17 +42,17 @@ export async function POST(req: Request) {
       return new Response("No friend requests", { status: 400 });
     }
 
-    //* add each other as a friend in db
-    // !combine at 1 promise
-    // await Promise.all([]);
+    await pusherServer.trigger(
+      toPusherKey(`user:${idToAdd}:friends`),
+      "new_friend",
+      {}
+    );
 
+    // notify added user
+
+    //* add each other as a friend in db
     await Database.sadd(`user:${session.user.id}:friends`, idToAdd);
     await Database.sadd(`user:${idToAdd}:friends`, session.user.id);
-
-    // await Database.srem(
-    //   `user:${idToAdd}:outbound_friend_requests`,
-    //   session.user.id
-    // );
 
     await Database.srem(
       `user:${session.user.id}:incoming_friend_requests`,
